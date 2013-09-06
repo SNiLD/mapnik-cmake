@@ -59,7 +59,6 @@ Cairo & fontconfig:
    * NOTE: Remember to also download the -dev package.
  * Extract: `C:\libraries`    
 
-
 Creating CMake project
 ----------------------
 

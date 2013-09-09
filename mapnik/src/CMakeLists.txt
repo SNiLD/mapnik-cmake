@@ -323,6 +323,8 @@ endif (USE_CAIRO)
 
 add_compiler_export_flags()
 
+add_definitions(-DMAPNIK_EXPORTS)
+
 # Create the mapnik library
 add_library(mapnik SHARED ${mapnik_sources})
 

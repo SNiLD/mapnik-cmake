@@ -2,8 +2,7 @@ set(mapnik_plugin_ogr_sources
     ogr_converter.cpp
     ogr_datasource.cpp
     ogr_featureset.cpp
-    ogr_index_featureset.cpp
-    ../../../src/debug.cpp)
+    ogr_index_featureset.cpp)
 
 # Needed by GDAL
 find_package(GeoTIFF REQUIRED)

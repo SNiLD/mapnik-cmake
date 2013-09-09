@@ -4,8 +4,7 @@ set(mapnik_plugin_shape_sources
     shape_featureset.cpp
     shape_index_featureset.cpp
     shape_io.cpp
-    shape_utils.cpp
-    ../../../src/debug.cpp)
+    shape_utils.cpp)
 
 # boost
 set(Boost_USE_STATIC_LIBS OFF)

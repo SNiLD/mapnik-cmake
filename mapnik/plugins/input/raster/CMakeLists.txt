@@ -1,9 +1,7 @@
 set(mapnik_plugin_raster_sources
     raster_datasource.cpp
     raster_featureset.cpp
-    raster_info.cpp
-    ../../../src/debug.cpp
-    ../../../src/well_known_srs.cpp)
+    raster_info.cpp)
 
 # boost
 set(Boost_USE_STATIC_LIBS OFF)

@@ -1,6 +1,5 @@
 set(mapnik_plugin_csv_sources
-    csv_datasource.cpp
-    ../../../src/debug.cpp)
+    csv_datasource.cpp)
 
 # boost
 set(Boost_USE_STATIC_LIBS OFF)

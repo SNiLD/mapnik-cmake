@@ -41,7 +41,7 @@ endif()
 set(MAPNIK_PLUGINS "" CACHE INTERNAL "Full paths to mapnik plugins. Automatically filled.")
 set(MAPNIK_BINARY_DIRECTORIES "" CACHE INTERNAL "Full paths to directories of dependencies. Automatically filled.")
 
-add_definitions(-DMAPNIK_EXPORTS -DMAPNIK_THREADSAFE)
+add_definitions(-DMAPNIK_THREADSAFE)
 
 if (ENABLE_STATS)
     add_definitions(-DMAPNIK_STATS)

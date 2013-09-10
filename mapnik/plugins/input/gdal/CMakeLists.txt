@@ -4,7 +4,19 @@ set(mapnik_plugin_gdal_sources
 
 # Needed by GDAL
 find_package(GeoTIFF REQUIRED)
+set_package_properties(GeoTIFF PROPERTIES
+    DESCRIPTION "TIFF based interchange format for georeferenced raster imagery"
+    URL "http://trac.osgeo.org/geotiff/"
+    TYPE REQUIRED
+    PURPOSE "GDAL dependency")
+
 find_package(GDAL REQUIRED)
+set_package_properties(GDAL PROPERTIES
+    DESCRIPTION "Translator library for raster geospatial data formats"
+    URL "http://www.gdal.org/"
+    TYPE REQUIRED
+    PURPOSE "GDAL plugin core dependency")
+
 include_directories(${GDAL_INCLUDE_DIR} ${GEOTIFF_INCLUDE_DIR})
 list(APPEND mapnik_plugin_gdal_libraries ${GDAL_LIBRARY} ${GEOTIFF_LIBRARIES})
 get_filename_component(geotiff_binary_directories ${GEOTIFF_INCLUDE_DIR}/../bin ABSOLUTE)

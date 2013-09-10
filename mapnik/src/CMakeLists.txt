@@ -1,5 +1,3 @@
-include(GenerateExportHeader)
-
 set(mapnik_sources
     box2d.cpp
     building_symbolizer.cpp
@@ -175,6 +173,11 @@ set(binary_directories ${MAPNIK_BINARY_DIRECTORIES})
 set(Boost_USE_STATIC_LIBS OFF)
 set(Boost_USE_STATIC_RUNTIME OFF)
 find_package(Boost REQUIRED COMPONENTS chrono date_time filesystem regex system thread)
+set_package_properties(Boost PROPERTIES
+    DESCRIPTION "Portable C++ source libraries"
+    URL "http://www.boost.org/"
+    TYPE REQUIRED
+    PURPOSE "Required for all core operations.")
 include_directories(${Boost_INCLUDE_DIRS})
 add_definitions(-DBoost_LIB_DIAGNOSTIC_DEFINITIONS -DBOOST_ALL_DYN_LINK -DBOOST_ALL_NO_LIB)
 list(APPEND mapnik_libraries ${Boost_LIBRARIES})
@@ -207,6 +210,11 @@ if (BOOST_REGEX_HAS_ICU)
 endif (BOOST_REGEX_HAS_ICU)
 
 find_package(ICU REQUIRED COMPONENTS ${icu_components})
+set_package_properties(ICU PROPERTIES
+    DESCRIPTION "Unicode and Globalization support library"
+    URL "http://site.icu-project.org/"
+    TYPE REQUIRED
+    PURPOSE "Required for text conversions.")
 include_directories(${ICU_INCLUDE_DIRS})
 list(APPEND mapnik_libraries ${ICU_LIBRARIES})
 get_filename_component(icu_binary_directories ${ICU_INCLUDE_DIRS}/../bin ABSOLUTE)
@@ -214,6 +222,11 @@ list(APPEND binary_directories ${icu_binary_directories})
 
 # iconv
 find_package(ICONV REQUIRED)
+set_package_properties(ICONV PROPERTIES
+    DESCRIPTION "String conversion library"
+    URL "http://www.gnu.org/software/libiconv/"
+    TYPE REQUIRED
+    PURPOSE "Required for text conversions (also dependency for some libraries).")
 include_directories(${ICONV_INCLUDE_DIR})
 list(APPEND mapnik_libraries ${ICONV_LIBRARY})
 get_filename_component(iconv_binary_directories ${ICONV_INCLUDE_DIR}/../bin ABSOLUTE)
@@ -221,6 +234,11 @@ list(APPEND binary_directories ${iconv_binary_directories})
 
 # zlib
 find_package(ZLIB REQUIRED)
+set_package_properties(ZLIB PROPERTIES
+    DESCRIPTION "Compression library"
+    URL "http://www.zlib.net/"
+    TYPE REQUIRED
+    PURPOSE "Required for processing compressed material (also dependency for some libraries).")
 include_directories(${ZLIB_INCLUDE_DIRS})
 list(APPEND mapnik_libraries ${ZLIB_LIBRARIES})
 get_filename_component(zlib_binary_directories ${ZLIB_INCLUDE_DIRS}/../bin ABSOLUTE)
@@ -228,6 +246,11 @@ list(APPEND binary_directories ${zlib_binary_directories})
 
 # freetype
 find_package(Freetype REQUIRED)
+set_package_properties(Freetype PROPERTIES
+    DESCRIPTION "Font rendering library"
+    URL "http://www.freetype.org/"
+    TYPE REQUIRED
+    PURPOSE "Required for all font rendering.")
 include_directories(${FREETYPE_INCLUDE_DIRS})
 list(APPEND mapnik_libraries ${FREETYPE_LIBRARIES})
 get_filename_component(freetype_binary_directories ${FREETYPE_LIBRARY}/../../bin ABSOLUTE)
@@ -235,6 +258,11 @@ list(APPEND binary_directories ${freetype_binary_directories})
 
 # proj.4
 find_package(Proj REQUIRED)
+set_package_properties(Proj PROPERTIES
+    DESCRIPTION "Cartographic Projections library"
+    URL "https://trac.osgeo.org/proj/"
+    TYPE REQUIRED
+    PURPOSE "Required for all projection transformations.")
 include_directories(${PROJ_INCLUDE_DIR})
 add_definitions(-DMAPNIK_USE_PROJ4)
 list(APPEND mapnik_libraries ${PROJ_LIBRARY})
@@ -242,35 +270,51 @@ get_filename_component(proj_binary_directories ${PROJ_INCLUDE_DIR}/../bin ABSOLU
 list(APPEND binary_directories ${proj_binary_directories})
 
 # JPEG
-if (USE_JPEG)
+find_package(JPEG)
+set_package_properties(JPEG PROPERTIES
+    DESCRIPTION "JPEG library"
+    URL "http://www.ijg.org/"
+    TYPE RECOMMENDED
+    PURPOSE "Enables using JPEG images.")
+if (USE_JPEG AND JPEG_FOUND)
     list(APPEND mapnik_sources jpeg_reader.cpp)
-    find_package(JPEG REQUIRED)
     include_directories(${JPEG_INCLUDE_DIR})
     list(APPEND mapnik_libraries ${JPEG_LIBRARIES})
     get_filename_component(jpeg_binary_directories ${JPEG_INCLUDE_DIR}/../bin ABSOLUTE)
     list(APPEND binary_directories ${jpeg_binary_directories})
-endif (USE_JPEG)
+endif (USE_JPEG AND JPEG_FOUND)
 
 # PNG
-if (USE_PNG)
+find_package(PNG)
+set_package_properties(PNG PROPERTIES
+    DESCRIPTION "Portable Network Graphics library"
+    URL "http://www.libpng.org/"
+    TYPE RECOMMENDED
+    PURPOSE "Enables using PNG images.")
+if (USE_PNG AND PNG_FOUND)
     list(APPEND mapnik_sources png_reader.cpp)
-    find_package(PNG REQUIRED)
     include_directories(${PNG_INCLUDE_DIRS})
     add_definitions(${PNG_DEFINITIONS})
     list(APPEND mapnik_libraries ${PNG_LIBRARIES})
     get_filename_component(png_binary_directories ${PNG_LIBRARY}/../../bin ABSOLUTE)
     list(APPEND binary_directories ${png_binary_directories})
-endif (USE_PNG)
+endif (USE_PNG AND PNG_FOUND)
 
 # TIFF
-if (USE_TIFF)
+find_package(TIFF)
+set_package_properties(TIFF PROPERTIES
+    DESCRIPTION "TIFF library"
+    URL "http://www.libtiff.org/"
+    TYPE RECOMMENDED
+    PURPOSE "Enables using TIFF images.")
+
+if (USE_TIFF AND TIFF_FOUND)
     list(APPEND mapnik_sources tiff_reader.cpp)
-    find_package(TIFF REQUIRED)
     include_directories(${TIFF_INCLUDE_DIR})
     list(APPEND mapnik_libraries ${TIFF_LIBRARIES})
     get_filename_component(tiff_binary_directories ${TIFF_INCLUDE_DIR}/../bin ABSOLUTE)
     list(APPEND binary_directories ${tiff_binary_directories})
-endif (USE_TIFF)
+endif (USE_TIFF AND TIFF_FOUND)
 
 # SVG
 if (USE_SVG)
@@ -293,35 +337,45 @@ if (USE_SVG)
 endif (USE_SVG)
 
 # libxml2
-if (USE_LIBXML2)
+find_package(LibXml2)
+set_package_properties(LibXml2 PROPERTIES
+    DESCRIPTION "XML processing library"
+    URL "http://xmlsoft.org/"
+    TYPE RECOMMENDED
+    PURPOSE "Enables more extensive XML support.")
+
+if (USE_LIBXML2 AND LIBXML2_FOUND)
     list(APPEND mapnik_sources libxml2_loader.cpp)
-    find_package(LibXml2 REQUIRED)
     include_directories(${LIBXML2_INCLUDE_DIR})
     add_definitions(${LIBXML2_DEFINITIONS} -DHAVE_LIBXML2)
     list(APPEND mapnik_libraries ${LIBXML2_LIBRARIES})
     get_filename_component(xml2_binary_directories ${LIBXML2_LIBRARIES}/../../bin ABSOLUTE)
     list(APPEND binary_directories ${xml2_binary_directories})
-else(USE_LIBXML2)
+else(USE_LIBXML2 AND LIBXML2_FOUND)
     list(APPEND mapnik_sources rapidxml_loader.cpp)
-endif (USE_LIBXML2)
+endif (USE_LIBXML2 AND LIBXML2_FOUND)
 
 # cairo
-if (USE_CAIRO)
+find_package(Cairo)
+set_package_properties(Cairo PROPERTIES
+    DESCRIPTION "2D graphics library with support for multiple output devices"
+    URL "http://www.cairographics.org/"
+    TYPE OPTIONAL
+    PURPOSE "Enables rendering with the cairo library.")
+
+if (USE_CAIRO AND CAIRO_FOUND)
+    # Cairo dependencies
+    find_package(FontConfig REQUIRED)
     list(APPEND mapnik_sources
         cairo_context.cpp
         cairo_renderer.cpp)
-    # Cairo dependencies
-    find_package(FontConfig REQUIRED)
-    find_package(Cairo REQUIRED)
     include_directories(${CAIRO_INCLUDE_DIRS} ${FONTCONFIG_INCLUDE_DIR})
     add_definitions(-DHAVE_CAIRO)
     list(APPEND mapnik_libraries ${CAIRO_LIBRARIES} ${FONTCONFIG_LIBRARIES})
     get_filename_component(fontconfig_binary_directories ${FONTCONFIG_LIBRARIES}/../../bin ABSOLUTE)
     get_filename_component(cairo_binary_directories ${CAIRO_LIBRARIES}/../../bin ABSOLUTE)
     list(APPEND binary_directories ${fontconfig_binary_directories} ${cairo_binary_directories})
-endif (USE_CAIRO)
-
-add_compiler_export_flags()
+endif (USE_CAIRO AND CAIRO_FOUND)
 
 add_definitions(-DMAPNIK_EXPORTS)
 

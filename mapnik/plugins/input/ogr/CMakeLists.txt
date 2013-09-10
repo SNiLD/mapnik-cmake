@@ -7,6 +7,7 @@ set(mapnik_plugin_ogr_sources
 # Needed by GDAL
 find_package(GeoTIFF REQUIRED)
 find_package(GDAL REQUIRED)
+
 include_directories(${GDAL_INCLUDE_DIR} ${GEOTIFF_INCLUDE_DIR})
 list(APPEND mapnik_plugin_ogr_libraries ${GDAL_LIBRARY} ${GEOTIFF_LIBRARIES})
 get_filename_component(gdal_binary_directories ${GDAL_INCLUDE_DIR}/../bin ABSOLUTE)

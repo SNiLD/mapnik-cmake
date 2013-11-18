@@ -13,6 +13,11 @@ if (PLUGIN_OGR)
     add_subdirectory(ogr)
 endif (PLUGIN_OGR)
 
+if (PLUGIN_OSM)
+    message(STATUS "Adding OpenStreetMap plugin...")
+    add_subdirectory(osm)
+endif (PLUGIN_OSM)
+
 if (PLUGIN_RASTER)
     message(STATUS "Adding raster plugin...")
     add_subdirectory(raster)

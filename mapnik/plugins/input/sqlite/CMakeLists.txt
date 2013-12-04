@@ -1,14 +1,14 @@
 set(mapnik_plugin_sqlite_sources
     sqlite_datasource.cpp
     sqlite_featureset.cpp)
-    
+
 find_package(Sqlite3 REQUIRED)
 set_package_properties(Sqlite3 PROPERTIES
     DESCRIPTION "Software library that implements a self-contained, serverless, zero-configuration, transactional SQL database engine."
     URL "http://www.sqlite.org/"
     TYPE REQUIRED
     PURPOSE "Enables queries from SQLite databases.")
-    
+
 include_directories(${SQLITE3_INCLUDE_DIR})
 list(APPEND mapnik_plugin_sqlite_libraries ${SQLITE3_LIBRARY})
 get_filename_component(sqlite3_binary_directories ${SQLITE3_LIBRARY}/../../bin ABSOLUTE)

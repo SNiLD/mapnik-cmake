@@ -23,6 +23,11 @@ if (PLUGIN_RASTER)
     add_subdirectory(raster)
 endif (PLUGIN_RASTER)
 
+if (PLUGIN_RASTERLITE)
+    message(STATUS "Adding rasterlite plugin...")
+    add_subdirectory(rasterlite)
+endif (PLUGIN_RASTERLITE)
+
 if (PLUGIN_SHAPE)
     message(STATUS "Adding shape plugin...")
     add_subdirectory(shape)
